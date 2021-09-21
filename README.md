@@ -1,6 +1,6 @@
-![image text]("https://cdn.freebiesupply.com/logos/large/2x/spotify-2-logo-png-transparent.png")
 
-# Spotify Genius Music Player
+
+# <img src="images/spotify_img.png" alt="drawing" width="25"/> Spotify Genius Music Player <img src="images/genius_lyrics_image.png" alt="drawing" width="25"/> 
 Spotify track app that utilizes Spotify and Genius Lyrics API to render our application in a website browser.
 
 ## Instructions
