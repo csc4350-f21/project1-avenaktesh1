@@ -4,70 +4,79 @@ import os
 import random
 from dotenv import find_dotenv, load_dotenv
 
+
 # Environment variables
 load_dotenv(find_dotenv())
+def get_spotify_data(country):
+    # Client ID and Client Secret from the Spotify web dashboard portal from .env
+    CLIENT_ID = os.getenv("CLIENT_ID")
+    CLIENT_SECRET = os.getenv("CLIENT_SECRET")
 
-# Client ID and Client Secret from the Spotify web dashboard portal from .env
-CLIENT_ID = os.getenv("CLIENT_ID")
-CLIENT_SECRET = os.getenv("CLIENT_SECRET")
-
-# Client Credentials Flow Authorization URL
-AUTH_URL = "https://accounts.spotify.com/api/token"
-
-
-# Post request to generate authorization token
-auth_response = requests.post(AUTH_URL, {
-    "grant_type": "client_credentials",
-    "client_id": CLIENT_ID,
-    "client_secret": CLIENT_SECRET
-})
-
-# Jsonify authorization response
-auth_response_data = auth_response.json()
-
-# Acces the 'access_token' credentials from the JSON object
-access_token = auth_response_data['access_token']
-
-# Import the auth token into the Authorization key header
-headers = {
-    'Authorization': 'Bearer {token}'.format(token=access_token)
-}
-
-# Artist ID's from Kayne, Drake, and Kid Cudi
-artist_id = ["5K4W6rqBFWDnAN6FQUkS6x", "3TVXtAsR1Inumwj472S9r4", "0fA0VVWsXO9YnASrzqfmYu"]
-
-# Random ID generator from the artist_id
-random_choice = random.choice(artist_id)
-
-# Auto populate the URI with artist_id URL
-BASE_URL = "https://api.spotify.com/v1/artists/" + random_choice + "/top-tracks"
-
-params = {
-    "country": "US"
-}
-
-response = requests.get(
-    BASE_URL,
-    headers=headers,
-    params=params
-)
-# print(json.dumps(response.json(), indent=2))
+    # Client Credentials Flow Authorization URL
+    AUTH_URL = "https://accounts.spotify.com/api/token"
 
 
-# Grab the song_name, artist_name, song_related_image, song_preview_URL
+    # Post request to generate authorization token
+    auth_response = requests.post(AUTH_URL, {
+        "grant_type": "client_credentials",
+        "client_id": CLIENT_ID,
+        "client_secret": CLIENT_SECRET
+    })
 
-# song_name
-song_name = json.dumps(response.json()['tracks'][0]['name'], indent=2)
-print(song_name)
+    # Jsonify authorization response
+    auth_response_data = auth_response.json()
 
-# artist_name
-artist_name = json.dumps(response.json()['tracks'][0]['album']['artists'][0]['name'], indent=2)
-print(artist_name)
+    # Acces the 'access_token' credentials from the JSON object
+    access_token = auth_response_data['access_token']
 
-# song_related_image
-song_related_image = json.dumps(response.json()['tracks'][0]['album']['images'][0]['url'], indent=2)
-print(song_related_image)
+    # Import the auth token into the Authorization key header
+    headers = {
+        'Authorization': 'Bearer {token}'.format(token=access_token)
+    }
 
-# song_preview_URL
-song_related_URL = json.dumps(response.json()['tracks'][0], indent=2)
-print(song_related_URL)
+    # Artist ID's from Kayne, Drake, and Kid Cudi
+    artist_id = ["5K4W6rqBFWDnAN6FQUkS6x", "3TVXtAsR1Inumwj472S9r4", "0fA0VVWsXO9YnASrzqfmYu"]
+
+    # Random ID generator from the artist_id
+    random_choice = random.choice(artist_id)
+
+    # Auto populate the URI with artist_id URL
+    BASE_URL = "https://api.spotify.com/v1/artists/" + random_choice + "/top-tracks"
+
+    params = {
+        "country": country
+    }
+
+    response = requests.get(
+        BASE_URL,
+        headers=headers,
+        params=params
+    )
+
+    # print(json.dumps(response.json(), indent=2))
+
+    # Empty array to append song information and call in app.py
+    song_info = []
+
+    try:
+        # Grab the song_name, artist_name, song_related_image, song_preview_URL
+
+        # song_name
+        song_name = json.dumps(response.json()['tracks'][0]['name'], indent=2)
+        song_info.append(song_name)
+
+        # artist_name
+        artist_name = json.dumps(response.json()['tracks'][0]['album']['artists'][0]['name'], indent=2)
+        song_info.append(artist_name)
+
+        # song_related_image
+        song_related_image = json.dumps(response.json()['tracks'][0]['album']['images'][0]['url'], indent=2)
+        song_info.append(song_related_image)
+
+        # song_preview_URL
+        song_related_URL = json.dumps(response.json()['tracks'][0]['preview_url'], indent=2)
+        song_info.append(song_related_URL)
+    except:
+        print("Could not fetch song information!")
+    
+    return song_info

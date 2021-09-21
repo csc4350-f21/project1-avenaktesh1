@@ -9,7 +9,6 @@ To run this app on your local machine, clone this repository using the command:
 <br/>
 ```git clone https://github.com/csc4350-f21/project1-avenaktesh1.git``` 
 <br/>
-
 to the specified directory you want the project to be copied in.
 
 

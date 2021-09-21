@@ -2,6 +2,7 @@ import requests
 import json
 import os
 import random
+from spotify import get_spotify_data
 from dotenv import find_dotenv, load_dotenv
 
 # Environment variables
@@ -31,3 +32,4 @@ access_token = auth_response_data['access_token']
 headers = {
     'Authorization': 'Bearer {token}'.format(token=access_token)
 }
+
