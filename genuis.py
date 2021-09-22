@@ -33,3 +33,4 @@ headers = {
     'Authorization': 'Bearer {token}'.format(token=access_token)
 }
 
+BASE_URL = "api.genius.com/artists/16775/songs" + song_info[5]

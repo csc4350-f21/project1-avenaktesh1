@@ -1,13 +1,13 @@
-from flask import Flask
-from flask.templating import render_template
+from os import lseek
+import flask
 from spotify import get_spotify_data
 
-app = Flask(__name__)
+data = get_spotify_data()
+
+app = flask.Flask(__name__)
 
 @app.route("/")
-def index(name = None):
-    print(get_spotify_data("US"))
-    return "helloworld"
-    # return render_template("index.html", name=name)
+def main():
+    return flask.render_template("index.html", data = data)
 
 app.run()
