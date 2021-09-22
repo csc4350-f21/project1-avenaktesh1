@@ -1,5 +1,6 @@
 from os import lseek
 import flask
+import os
 from spotify import get_spotify_data
 from genius import get_genius_data
 
@@ -12,4 +13,7 @@ app = flask.Flask(__name__)
 def main():
     return flask.render_template("index.html", data = data, genius_url = genius_url)
 
-app.run()
+app.run(
+    host='0.0.0.0', 
+    port=int(os.getenv("PORT", 8080))
+)
