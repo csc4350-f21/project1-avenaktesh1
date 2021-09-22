@@ -85,5 +85,3 @@ def get_spotify_data():
         print("Could not fetch song information!")
 
     return song_info
-
-get_spotify_data()

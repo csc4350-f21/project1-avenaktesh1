@@ -11,23 +11,31 @@
 
 <body>
 
-    <p>{{data}}</p>
+    <!-- Song Title -->
     <h1 class="align">
         {{data[0]}}
     </h1>
 
+    <!-- Artist of Song -->
     <h2 class="align">{{data[1]}}</h2>
 
+    <!-- Song album cover image or single cover image -->
     <div>
-        <img src={{data[2]}} alt="Song Preview">
+        <img src={{data[2]}} alt="Song Image Preview">
     </div>
 
+    <!-- Song Audio URL Preview -->
     <div>
         <audio controls>
             <source src="{{data[3]}}">
         </audio>
     </div>
+    
+    <!-- Link to Artist Genius Preview -->
+    <a href="{{genius_url}}">
 
+        <h3>Genius Lyrics</h3>
+    </a>
 
 </body>
 

@@ -39,4 +39,7 @@ response = requests.get(
     BASE_URL,
     headers=headers
 )
-print(json.dumps(response.json()['response']['hits'][0]['result']['url'], indent=2))
+def get_genius_data():
+    genius_url = []
+    genius_url.append(response.json()['response']['hits'][0]['result']['url'])
+    return genius_url
