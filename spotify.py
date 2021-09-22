@@ -76,11 +76,9 @@ def get_spotify_data():
         song_related_URL = json.dumps(response.json()['tracks'][0]['preview_url'], indent=2)
         song_info.append(song_related_URL.strip('"'))
 
-        song_id = json.dumps(response.json()['tracks'][0]['album']['artists'][0]['id'])
-        print(song_id.strip('"'))
-
+        # artist_id to input into the genius API so that we can fetch both song data simultaneously.
         artist_id = json.dumps(response.json()['tracks'][0]['id'])
-        print(artist_id)
+        song_info.append(artist_id.strip('"'))
 
     except:
         print("Could not fetch song information!")
