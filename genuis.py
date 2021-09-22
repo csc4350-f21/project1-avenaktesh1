@@ -33,4 +33,10 @@ headers = {
     'Authorization': 'Bearer {token}'.format(token=access_token)
 }
 
-BASE_URL = "api.genius.com/artists/16775/songs" + song_info[5]
+BASE_URL = "http://api.genius.com/search?q=" + get_spotify_data()[1] + "?" 
+
+response = requests.get(
+    BASE_URL,
+    headers=headers
+)
+print(json.dumps(response.json()['response']['hits'][0]['result']['url'], indent=2))
