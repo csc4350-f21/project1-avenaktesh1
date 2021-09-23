@@ -15,8 +15,8 @@ AUTH_URL = "https://accounts.spotify.com/api/token"
 # Post request to generate authorization token
 auth_response = requests.post(AUTH_URL, {
     "grant_type": "client_credentials",
-    "client_id": os.getenv("CLIENT_ID"),
-    "client_secret": os.getenv("CLIENT_SECRET")
+    "client_id": os.getenv('CLIENT_ID'),
+    "client_secret": os.getenv('CLIENT_SECRET')
 })
 
 # Jsonify authorization response
