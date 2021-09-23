@@ -2,7 +2,6 @@ from os import lseek
 import flask
 import os
 from spotify import get_spotify_data, get_genius_data
-# from genius import get_genius_data
 
 data = get_spotify_data()
 genius_url = get_genius_data()[0]
