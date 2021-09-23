@@ -8,8 +8,6 @@ from dotenv import find_dotenv, load_dotenv
 load_dotenv(find_dotenv())
 
 # Client ID and Client Secret from the Spotify web dashboard portal from .env
-CLIENT_ID = os.getenv("CLIENT_ID")
-CLIENT_SECRET = os.getenv("CLIENT_SECRET")
 
 # Client Credentials Flow Authorization URL
 AUTH_URL = "https://accounts.spotify.com/api/token"
@@ -17,8 +15,8 @@ AUTH_URL = "https://accounts.spotify.com/api/token"
 # Post request to generate authorization token
 auth_response = requests.post(AUTH_URL, {
     "grant_type": "client_credentials",
-    "client_id": CLIENT_ID,
-    "client_secret": CLIENT_SECRET
+    "client_id": os.getenv("CLIENT_ID"),
+    "client_secret": os.getenv("CLIENT_SECRET")
 })
 
 # Jsonify authorization response
