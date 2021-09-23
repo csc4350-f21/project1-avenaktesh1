@@ -58,4 +58,5 @@ Knowledge problems that still persist are:
 - Fixing the correct genius URL to display the exact song that is currently being played.
 - Creating a shuffle option and search bar to let users be able to pick specific or random songs to make interactive instead of redeploying the app to get a different song each time.
 
-[My Heroku App]("https://morning-ridge-34994.herokuapp.com/")
+## My App
+- "https://morning-ridge-34994.herokuapp.com/"
