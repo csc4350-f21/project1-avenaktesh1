@@ -75,13 +75,30 @@ def get_spotify_data():
         # song_preview_URL
         song_related_URL = json.dumps(response.json()['tracks'][0]['preview_url'], indent=2)
         song_info.append(song_related_URL.strip('"'))
-
-        # # song_id to input into the genius API so that we can fetch both song data simultaneously.
-        # song_id = json.dumps(response.json()['tracks'][0], indent = 2)
-        # print(song_id)
-        # song_info.append(song_id.strip('"'))
    
     except:
         print("Could not fetch song information!")
 
     return song_info
+
+
+artist_name_genius = get_spotify_data()[1]
+
+# Client Credentials Flow Authorization URL
+access_token = os.getenv('CLIENT_ACCESS_TOKEN')
+
+# Import the auth token into the Authorization key header
+headers_genius = {
+    'Authorization': 'Bearer {token}'.format(token=access_token)
+}
+BASE_URL_genius = "http://api.genius.com/search?q=" + artist_name_genius + "?"
+
+r = requests.get(
+    BASE_URL_genius,
+    headers=headers_genius
+)
+
+def get_genius_data():
+    genius_url = []
+    genius_url.append(r.json()['response']['hits'][0]['result']['url'])
+    return genius_url
