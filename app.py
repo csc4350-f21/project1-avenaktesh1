@@ -13,3 +13,4 @@ def main():
     return flask.render_template("index.html", data = data, genius_url = genius_url)
 
 app.run(host='0.0.0.0',port=int("PORT",8080))
+# app.run()

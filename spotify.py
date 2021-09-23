@@ -85,11 +85,11 @@ def get_spotify_data():
 artist_name_genius = get_spotify_data()[1]
 
 # Client Credentials Flow Authorization URL
-access_token = os.getenv('CLIENT_ACCESS_TOKEN')
+CLIENT_ACCESS_TOKEN = os.getenv('CLIENT_ACCESS_TOKEN')
 
 # Import the auth token into the Authorization key header
 headers_genius = {
-    'Authorization': 'Bearer {token}'.format(token=access_token)
+    'Authorization': f'Bearer {CLIENT_ACCESS_TOKEN}'
 }
 BASE_URL_genius = "http://api.genius.com/search?q=" + artist_name_genius + "?"
 
