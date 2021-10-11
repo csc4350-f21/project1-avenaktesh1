@@ -11,9 +11,20 @@ load_dotenv(find_dotenv())
 data = get_spotify_data()
 genius_url = get_genius_data()[0]
 
+
 app = flask.Flask(__name__)
 
 db = SQLAlchemy(app)
+
+uri = os.getenv('SQLALCHEMY_DATABASE_URI')
+if uri.startswith('postgres://'):
+    uri = uri.replace("postgres://", 'postgresql://', 1)
+
+
+app.config['SQLALCHEMY_DATABASE_URI'] = uri
+
+# Suppres a warning - not strictly needed
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 class Task(db.Model):
     id = db.Column(db.Integer, primary_key = True)
@@ -22,14 +33,16 @@ class Task(db.Model):
 
 db.create_all()
 
-app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('SQLALCHEMY_DATABASE_URI')
-
-# Suppres a warning - not strictly needed
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-
 @app.route("/")
 def main():
-    return flask.render_template("index.html", data = data, genius_url = genius_url)
+    return flask.render_template(
+        "index.html", 
+        data = data, 
+        genius_url = genius_url,
+        length=0,
+        tasks=[],
+        due_dates=[]
+        )
 
 app.run(
     host= '0.0.0.0',
