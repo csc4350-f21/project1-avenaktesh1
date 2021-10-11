@@ -13,6 +13,7 @@ genius_url = get_genius_data()[0]
 
 
 app = flask.Flask(__name__)
+app.config['TEMPLATES_AUTO_RELOAD'] = True
 
 db = SQLAlchemy(app)
 
@@ -26,23 +27,36 @@ app.config['SQLALCHEMY_DATABASE_URI'] = uri
 # Suppres a warning - not strictly needed
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-class Task(db.Model):
+class artistID(db.Model):
     id = db.Column(db.Integer, primary_key = True)
     name = db.Column(db.String(120))
-    due_date = db.Column(db.String(80))
+    print(name)
 
 db.create_all()
 
-@app.route("/")
+@app.route("/", methods=["GET","POST"])
 def main():
+
+    if flask.request.method == "POST":
+        name = flask.request.form.get("name")
+        artist = artistID(name=name)
+
+        db.session.add(artist)
+        db.session.commit()
+
+    items = artistID.query.all()
+    name = []
+
+    for item in items:
+        name.append(item.name)
+    
     return flask.render_template(
-        "index.html", 
+        "index.html",
         data = data, 
         genius_url = genius_url,
-        length=0,
-        tasks=[],
-        due_dates=[]
-        )
+        length= len(name),
+        tasks= name
+    )
 
 app.run(
     host= '0.0.0.0',

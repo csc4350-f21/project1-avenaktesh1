@@ -38,13 +38,12 @@
     </a>
 
     <h1>Library list:</h1>
-    {% for i in range(length) %}
-        <p>{{tasks[i]}} Due {{due_dates[i]}}</p>
-    {% endfor %}
     <h1>Enter Todo:</h1>
+    {% for i in range(length) %}
+        <p>{{tasks[i]}}</p>
+    {% endfor %}
     <form method="POST" action="/">
-        <input type="text" name="task" placeholder="Task Name">
-        <input type="text" name="due_date" placeholder="Due Date">
+        <input type="text" name="name" placeholder="Artist ID">
         <input type="submit" value="Submit">
     </form>
 
