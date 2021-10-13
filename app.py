@@ -44,9 +44,9 @@ class User(db.Model):
 # create the database tables 
 db.create_all()
 
-@app.route('/log-in', methods=['GET','POST'])
+@app.route('/register', methods=['GET','POST'])
 def register():
-    return flask.render_template('log-in.html')
+    return flask.render_template('register.html')
 
 @app.route('/login', methods=['GET','POST'])
 def login():
