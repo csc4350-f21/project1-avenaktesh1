@@ -23,20 +23,23 @@
     <div>
         <h3>Save a favorite Artist ID for later</h3>
     </div>
-        
+
     <!-- Songs Library -->
     <div>
         <div>
             <h1>Library list:</h1>
         </div>
-     <div>
-        <form method="POST" action="/index">
-            <input type="text" name="name" placeholder="Artist ID">
-            <input type="submit" value="Save">
-        </form>
-     </div>
+        <div>
+            <form method="POST" action="/index">
+                <input type="text" name="name" placeholder="Artist ID">
+                <input type="submit" value="Save">
+            </form>
+        </div>
 
     </div>
+    {% for i in range(length) %}
+        <p class="songs_saved">{{name[i]}}</p>
+    {% endfor %}
 
     <!-- Song Title -->
     <h1 class="align">
@@ -66,7 +69,3 @@
 </body>
 
 </html>
-
-<!-- % for i in range(length) %
-<p>name[i]</p>
-% endfor % -->

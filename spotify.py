@@ -102,15 +102,13 @@ def get_genius_data():
     genius_url.append(r.json()['response']['hits'][0]['result']['url'])
     return genius_url
 
-# def get_spotify_artist(artist_id):
-#     BASE_URL = f"https://api.spotify.com/v1/artists/{artist_id}"
+def get_spotify_artist(artist_id):
+    BASE_URL = f"https://api.spotify.com/v1/artists/{artist_id}"
 
-#     response = requests.get(
-#         BASE_URL,
-#         headers=headers
-#     )
-#     print(response)
-#     # if response.status_code == "<Response [400]>":
-#     #     return "Not Valid ID"
+    response = requests.get(
+        BASE_URL,
+        headers=headers
+    )
+    print(response)
 
-#     return response.json()['name']
+    return response.json()['name']
