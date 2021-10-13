@@ -33,19 +33,20 @@
 
     <!-- Link to Artist Genius Preview -->
     <a href="{{genius_url}}">
-
         <h3>Genius Lyrics</h3>
     </a>
 
     <!-- Songs Library -->
     <h1>Library list:</h1>
     {% for i in range(length) %}
-        <p>{{tasks[i]}}</p>
+        <p>{{name[i]}}</p>
     {% endfor %}
+    3MZsBdqDrRTJihTHQrO6Dq
     <form method="POST" action="/">
         <input type="text" name="name" placeholder="Artist ID">
         <input type="submit" value="Submit">
     </form>
+    
 </body>
 
 </html>

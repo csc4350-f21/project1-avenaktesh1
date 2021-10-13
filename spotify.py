@@ -80,7 +80,6 @@ def get_spotify_data():
 
     return song_info
 
-
 artist_name_genius = get_spotify_data()[1]
 
 # Client Credentials Flow Authorization URL
@@ -90,6 +89,7 @@ CLIENT_ACCESS_TOKEN = os.getenv('CLIENT_ACCESS_TOKEN')
 headers_genius = {
     'Authorization': f'Bearer {CLIENT_ACCESS_TOKEN}'
 }
+
 BASE_URL_genius = "http://api.genius.com/search?q=" + artist_name_genius + "?"
 
 r = requests.get(
@@ -102,18 +102,15 @@ def get_genius_data():
     genius_url.append(r.json()['response']['hits'][0]['result']['url'])
     return genius_url
 
-def get_spotify_artist(artist_id):
-    BASE_URL = f"https://api.spotify.com/v1/artists/{artist_id}"
+# def get_spotify_artist(artist_id):
+#     BASE_URL = f"https://api.spotify.com/v1/artists/{artist_id}"
 
-    # params = {
-    #     "country": "US"
-    # }
+#     response = requests.get(
+#         BASE_URL,
+#         headers=headers
+#     )
+#     print(response)
+#     # if response.status_code == "<Response [400]>":
+#     #     return "Not Valid ID"
 
-    response = requests.get(
-        BASE_URL,
-        headers=headers
-    )
-
-    return response.json()['name']
-
-    
+#     return response.json()['name']
