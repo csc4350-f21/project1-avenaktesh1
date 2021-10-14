@@ -91,8 +91,9 @@ def index():
         response_object = Artist_ID(username = current_user.username, artist_name = result)
         db.session.add(response_object)
         db.session.commit()
-    
+   
     artist_object = Artist_ID.query.all()
+    username_object = Username.query.filter_by(username = current_user.username).first()
     # .filter_by(username = current_user.username)
     artists_lst = []
     for artist in artist_object:
@@ -102,7 +103,8 @@ def index():
         'index.html', 
         username = current_user.username,
         artists = artists_lst,
-        length = len(artists_lst)
+        length = len(artists_lst),
+        username_obj = username_object
     )
 
 if __name__ == "__main__":
