@@ -32,7 +32,6 @@
         <h1>Library list:</h1>
     </div>
 
-    
     {% for i in range(length)%}
         <p class="favorite-artists">{{artists[i]}}</p>
     {% endfor%}
@@ -50,20 +49,21 @@
 
     <!-- Song Title -->
     <h1 class="align">
+        {{song_name}}
     </h1>
 
     <!-- Artist of Song -->
-    <h2 class="align"></h2>
+    <h2 class="align">{{artist_name}}</h2>
 
     <!-- Song album cover image or single cover image -->
     <div>
-        <img src="" alt="Song Image Preview">
+        <img src={{img_url}} alt="Song Image Preview">
     </div>
 
     <!-- Song Audio URL Preview -->
     <div>
         <audio controls>
-            <source src="">
+            <source src="{{song_preview}}">
         </audio>
     </div>
 

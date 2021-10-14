@@ -3,7 +3,7 @@ import flask
 import os
 from flask_login.utils import logout_user
 from werkzeug.utils import redirect
-from spotify import get_spotify_artist_info
+from spotify import get_spotify_artist_info, get_spotify_data_rand
 from dotenv import find_dotenv, load_dotenv
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, login_user, login_required, current_user
@@ -115,25 +115,26 @@ def index():
     random_lst = []
     for artist in artist_object:
         random_lst.append(artist.artist_name)
-
+    
     # Get random artist info to display from entered artists
     random_choice = random.choice(random_lst)
 
-    
-    artist_name = get_spotify_artist_info(str(random_choice))['name']
-
-
     # Get data from JSON object
-    # artist_name = get(random_choice)
-    # print(artist_name)
-    # print(get_spotify_artist_info(random_choice))
-
+    artist_data_json = get_spotify_data_rand(str(random_choice))
+    song_name = artist_data_json[0]
+    artist_name = artist_data_json[1]
+    img_url = artist_data_json[2]
+    song_preview = artist_data_json[3]
 
     return flask.render_template(
         'index.html', 
         username = current_user.username,
         artists = artists_lst,
-        length = len(artists_lst)
+        length = len(artists_lst),
+        song_name = song_name,
+        artist_name = artist_name,
+        img_url = img_url,
+        song_preview = song_preview
     )
 
 if __name__ == "__main__":

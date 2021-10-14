@@ -111,3 +111,45 @@ def get_spotify_artist_info(artist_id):
     response = response.json()
 
     return response
+
+def get_spotify_data_rand(artist_id):
+    BASE_URL = "https://api.spotify.com/v1/artists/" + artist_id + "/top-tracks"
+
+    params = {
+        "country": "US"
+    }
+
+    response = requests.get(
+        BASE_URL,
+        headers=headers,
+        params=params
+    )
+
+    # print(json.dumps(response.json(), indent=2))
+
+    # Empty array to append song information and call in app.py
+    song_info = []
+
+    try:
+        # Grab the song_name, artist_name, song_related_image, song_preview_URL
+
+        # song_name
+        song_name = json.dumps(response.json()['tracks'][0]['name'], indent=2)
+        song_info.append(song_name.strip('"'))
+
+        # artist_name
+        artist_name = json.dumps(response.json()['tracks'][0]['album']['artists'][0]['name'], indent=2)
+        song_info.append(artist_name.strip('"'))
+
+        # song_related_image
+        song_related_image = json.dumps(response.json()['tracks'][0]['album']['images'][0]['url'], indent=2)
+        song_info.append(song_related_image.strip('"'))
+
+        # song_preview_URL
+        song_related_URL = json.dumps(response.json()['tracks'][0]['preview_url'], indent=2)
+        song_info.append(song_related_URL.strip('"'))
+   
+    except:
+        print("Could not fetch song information!")
+
+    return song_info
