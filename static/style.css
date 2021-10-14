@@ -39,3 +39,8 @@ a h3{
 .songs_saved {
     text-align: center;
 }
+
+.favorite-artists{
+    text-align: center;
+    display: block;
+}

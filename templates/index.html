@@ -10,10 +10,6 @@
 </head>
 
 <body>
-
-    {% for i in range(length)%}
-        <p>{{artists[i]}}</p>
-    {% endfor%}
     <!-- Username's Song Explorer -->
     <form action='/logout' method="GET">
         <button>Logout</button>
@@ -33,9 +29,16 @@
 
     <!-- Songs Library -->
     <div>
-        <div>
-            <h1>Library list:</h1>
-        </div>
+        <h1>Library list:</h1>
+    </div>
+
+    
+    {% for i in range(length)%}
+        <p class="favorite-artists">{{artists[i]}}</p>
+    {% endfor%}
+    
+
+    <div>
 
         <div>
             <form method="POST" action="/index">

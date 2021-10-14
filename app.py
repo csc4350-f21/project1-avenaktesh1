@@ -9,6 +9,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, login_user, login_required, current_user
 from sqlalchemy.sql.schema import ForeignKey
 from flask_login import UserMixin
+import random
 
 # Environment variables
 load_dotenv(find_dotenv())
@@ -36,8 +37,6 @@ db.create_all()
 # Login Manager Instantiated
 login_manager = LoginManager()
 login_manager.init_app(app)
-
-
 
 # Replace the 'postgres' uri to 'postgresql'
 uri = os.getenv('SQLALCHEMY_DATABASE_URI')
@@ -100,19 +99,35 @@ def home():
 def index():
     if flask.request.method == "POST":
         artist_id__index = flask.request.form.get('artist_id__save')
-        result = get_spotify_artist_info(str(artist_id__index))
-        result = result["name"]
-        user_id = Username(username=current_user.username)
-        print(user_id.id)
-
+        result = artist_id__index
+        # result = get_spotify_artist_info(str(artist_id__index))
+        # result = result["name"]
+        # user_id = Username(username=current_user.username)
         response_object = Artist_ID(artist_name = result, username_id=current_user.id)
         db.session.add(response_object)
         db.session.commit()
-    
+  
     artist_object = Artist_ID.query.filter_by(username_id = current_user.id).all()
     artists_lst = []
     for artist in artist_object:
-        artists_lst.append(artist.artist_name)
+        artists_lst.append(get_spotify_artist_info(str(artist.artist_name))['name'])
+    
+    random_lst = []
+    for artist in artist_object:
+        random_lst.append(artist.artist_name)
+
+    # Get random artist info to display from entered artists
+    random_choice = random.choice(random_lst)
+
+    
+    artist_name = get_spotify_artist_info(str(random_choice))['name']
+
+
+    # Get data from JSON object
+    # artist_name = get(random_choice)
+    # print(artist_name)
+    # print(get_spotify_artist_info(random_choice))
+
 
     return flask.render_template(
         'index.html', 
