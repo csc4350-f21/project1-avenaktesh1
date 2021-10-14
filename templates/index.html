@@ -35,34 +35,29 @@
                 <input type="submit" value="Save">
             </form>
         </div>
-
     </div>
-    {% for i in range(length) %}
-        <p class="songs_saved">{{name[i]}}</p>
-    {% endfor %}
 
     <!-- Song Title -->
     <h1 class="align">
-        {{data[0]}}
     </h1>
 
     <!-- Artist of Song -->
-    <h2 class="align">{{data[1]}}</h2>
+    <h2 class="align"></h2>
 
     <!-- Song album cover image or single cover image -->
     <div>
-        <img src={{data[2]}} alt="Song Image Preview">
+        <img src="" alt="Song Image Preview">
     </div>
 
     <!-- Song Audio URL Preview -->
     <div>
         <audio controls>
-            <source src="{{data[3]}}">
+            <source src="">
         </audio>
     </div>
 
     <!-- Link to Artist Genius Preview -->
-    <a href="{{genius_url}}">
+    <a href="">
         <h3>Genius Lyrics</h3>
     </a>
 

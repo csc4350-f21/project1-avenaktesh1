@@ -35,8 +35,6 @@ artist_id = ["3MZsBdqDrRTJihTHQrO6Dq","5eIbEEQnDM8yuDVB0bimSP","6l3HvQ5sa6mXTsMT
 
 # Random ID generator from the artist_id
 random_choice = random.choice(artist_id)
-# <iframe src="https://open.spotify.com/embed/artist/" width="100%" height="380" frameBorder="0" allowtransparency="true" allow="encrypted-media"></iframe>
-# Auto populate the URI with artist_id URL
 
 def get_spotify_data():
     BASE_URL = "https://api.spotify.com/v1/artists/" + random_choice + "/top-tracks"
@@ -102,13 +100,16 @@ def get_genius_data():
     genius_url.append(r.json()['response']['hits'][0]['result']['url'])
     return genius_url
 
-def get_spotify_artist(artist_id):
+def get_spotify_artist_info(artist_id):
     BASE_URL = f"https://api.spotify.com/v1/artists/{artist_id}"
 
     response = requests.get(
         BASE_URL,
         headers=headers
     )
+    # ['name']
+    response = response.json()
     print(response)
 
-    return response.json()['name']
+    return response
+get_spotify_artist_info("3MZsBdqDrRTJihTHQrO6Dq")
