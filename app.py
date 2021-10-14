@@ -40,8 +40,8 @@ login_manager.init_app(app)
 
 # Replace the 'postgres' uri to 'postgresql'
 uri = os.getenv('SQLALCHEMY_DATABASE_URI')
-if uri.startswith('postgres://'):
-    uri = uri.replace("postgres://", 'postgresql://', 1)
+# if uri.startswith('postgres://'):
+#     uri = uri.replace("postgres://", 'postgresql://', 1)
 
 # Set the uri to the app.config
 app.config['SQLALCHEMY_DATABASE_URI'] = uri
