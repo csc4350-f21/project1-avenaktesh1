@@ -12,8 +12,12 @@
 <body>
 
     <!-- Username's Song Explorer -->
+    <form action='/logout' method="GET">
+        <button>Logout</button>
+    </form>
+
     <div>
-        <h1>Username's Song Exploerer</h1>
+        <h1>{{username}}'s Song Explorer</h1>
     </div>
 
     <div>
@@ -28,10 +32,14 @@
     <div>
         <div>
             <h1>Library list:</h1>
+            {% for i in range(length) %}
+                <p>{{artists[i]}}</p>
+            {% endfor %}
         </div>
+
         <div>
             <form method="POST" action="/index">
-                <input type="text" name="name" placeholder="Artist ID">
+                <input type="text" name="artist_id__save" placeholder="Artist ID">
                 <input type="submit" value="Save">
             </form>
         </div>

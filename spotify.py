@@ -109,7 +109,5 @@ def get_spotify_artist_info(artist_id):
     )
     # ['name']
     response = response.json()
-    print(response)
 
     return response
-get_spotify_artist_info("3MZsBdqDrRTJihTHQrO6Dq")

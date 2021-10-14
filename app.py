@@ -36,9 +36,6 @@ app.config["SECRET_KEY"] = os.getenv('SECRET_KEY')
 # Suppress a warning - not strictly needed
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-# Create the database tables
-db.create_all()
-
 # Register Page (starting page)
 @app.route("/", methods=["GET","POST"])
 def register():
@@ -76,7 +73,7 @@ app.route('/logout')
 @login_required
 def logout():
     logout_user()
-    return "logged out"
+    return flask.render_template('/login')
 
 app.route('/home')
 @login_required
@@ -86,7 +83,27 @@ def home():
 # Index Page (app page)
 @app.route('/index', methods=['GET','POST'])
 def index():
-    return flask.render_template('index.html')
+    if flask.request.method == "POST":
+        artist_id__index = flask.request.form.get
+        ('artist_id__save')
+        # try:
+        result = get_spotify_artist_info(artist_id__index)
+        response_object = Artist_ID(username = current_user.username, artist_name = result)
+        db.session.add(response_object)
+        db.session.commit()
+    
+    artist_object = Artist_ID.query.all()
+    # .filter_by(username = current_user.username)
+    artists_lst = []
+    for artist in artist_object:
+        artists_lst.append(artist.artist_name)
+    
+    return flask.render_template(
+        'index.html', 
+        username = current_user.username,
+        artists = artists_lst,
+        length = len(artists_lst)
+    )
 
 if __name__ == "__main__":
     from models import Username, Artist_ID
