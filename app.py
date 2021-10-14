@@ -1,13 +1,14 @@
 from os import lseek
 import flask
 import os
-
 from flask_login.utils import logout_user
 from werkzeug.utils import redirect
 from spotify import get_spotify_artist_info
 from dotenv import find_dotenv, load_dotenv
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, login_user, login_required, current_user
+from sqlalchemy.sql.schema import ForeignKey
+from flask_login import UserMixin
 
 # Environment variables
 load_dotenv(find_dotenv())
@@ -17,6 +18,20 @@ app = flask.Flask(__name__)
 
 # Intialize SQL Alchemy Database
 db = SQLAlchemy(app)
+
+class Username(db.Model, UserMixin):
+   id = db.Column(db.Integer, primary_key = True)
+   username = db.Column(db.String(80), unique=True)
+   artist_id = db.relationship('Artist_ID')
+
+class Artist_ID(db.Model, UserMixin):
+    id = db.Column(db.Integer, primary_key = True)
+    username_id = db.Column(db.Integer, db.ForeignKey('username.id'))
+    artist_name = db.Column(db.String(120))
+
+# Create the database tables
+db.create_all()
+# db.drop_all()
 
 # Login Manager Instantiated
 login_manager = LoginManager()
@@ -69,11 +84,11 @@ def login():
     return flask.render_template('login.html')
 
 # Flask Logout
-app.route('/logout')
+app.route('/logout', methods=['GET','POST'])
 @login_required
 def logout():
     logout_user()
-    return flask.render_template('/login')
+    return redirect('/login')
 
 app.route('/home')
 @login_required
@@ -84,31 +99,30 @@ def home():
 @app.route('/index', methods=['GET','POST'])
 def index():
     if flask.request.method == "POST":
-        artist_id__index = flask.request.form.get
-        ('artist_id__save')
-        # try:
-        result = get_spotify_artist_info(artist_id__index)
-        response_object = Artist_ID(username = current_user.username, artist_name = result)
+        artist_id__index = flask.request.form.get('artist_id__save')
+        result = get_spotify_artist_info(str(artist_id__index))
+        result = result["name"]
+        user_id = Username(username=current_user.username)
+        print(user_id.id)
+
+        response_object = Artist_ID(artist_name = result, username_id=current_user.id)
         db.session.add(response_object)
         db.session.commit()
-   
-    artist_object = Artist_ID.query.all()
-    username_object = Username.query.filter_by(username = current_user.username).first()
-    # .filter_by(username = current_user.username)
+    
+    artist_object = Artist_ID.query.filter_by(username_id = current_user.id).all()
     artists_lst = []
     for artist in artist_object:
         artists_lst.append(artist.artist_name)
-    
+
     return flask.render_template(
         'index.html', 
         username = current_user.username,
         artists = artists_lst,
-        length = len(artists_lst),
-        username_obj = username_object
+        length = len(artists_lst)
     )
 
 if __name__ == "__main__":
-    from models import Username, Artist_ID
+    # from models import Username, Artist_ID
     app.run(
         # Debug mode
         debug = True,
