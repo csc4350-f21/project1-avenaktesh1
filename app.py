@@ -3,7 +3,7 @@ import flask
 import os
 from flask_login.utils import logout_user
 from werkzeug.utils import redirect
-from spotify import get_spotify_artist_info, get_spotify_data_rand
+from spotify import get_spotify_artist_info, get_spotify_data_rand, get_genius_data_artist
 from dotenv import find_dotenv, load_dotenv
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, login_user, login_required, current_user
@@ -100,18 +100,14 @@ def index():
     if flask.request.method == "POST":
         artist_id__index = flask.request.form.get('artist_id__save')
         result = artist_id__index
-        # result = get_spotify_artist_info(str(artist_id__index))
-        # result = result["name"]
-        # user_id = Username(username=current_user.username)
         response_object = Artist_ID(artist_name = result, username_id=current_user.id)
         db.session.add(response_object)
         db.session.commit()
-  
+ 
     artist_object = Artist_ID.query.filter_by(username_id = current_user.id).all()
     artists_lst = []
     for artist in artist_object:
         artists_lst.append(get_spotify_artist_info(str(artist.artist_name))['name'])
-    
     random_lst = []
     for artist in artist_object:
         random_lst.append(artist.artist_name)
@@ -125,16 +121,19 @@ def index():
     artist_name = artist_data_json[1]
     img_url = artist_data_json[2]
     song_preview = artist_data_json[3]
+    genius_lyrics = get_genius_data_artist(artist_name)
+    print(genius_lyrics)
 
     return flask.render_template(
-        'index.html', 
+        'index.html',
         username = current_user.username,
         artists = artists_lst,
         length = len(artists_lst),
         song_name = song_name,
         artist_name = artist_name,
         img_url = img_url,
-        song_preview = song_preview
+        song_preview = song_preview,
+        genius_lyrics = genius_lyrics
     )
 
 if __name__ == "__main__":

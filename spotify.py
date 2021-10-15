@@ -88,8 +88,9 @@ headers_genius = {
     'Authorization': f'Bearer {CLIENT_ACCESS_TOKEN}'
 }
 
-BASE_URL_genius = "http://api.genius.com/search?q=" + artist_name_genius + "?"
 
+
+BASE_URL_genius = "http://api.genius.com/search?q=" + artist_name_genius + "?"
 r = requests.get(
     BASE_URL_genius,
     headers=headers_genius
@@ -153,3 +154,12 @@ def get_spotify_data_rand(artist_id):
         print("Could not fetch song information!")
 
     return song_info
+
+def get_genius_data_artist(artist_name):
+
+    BASE_URL_genius = "http://api.genius.com/search?q=" + artist_name + "?"
+    r = requests.get(
+        BASE_URL_genius,
+        headers=headers_genius
+    )
+    return r.json()['response']['hits'][0]['result']['url']
