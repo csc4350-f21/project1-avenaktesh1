@@ -2,9 +2,13 @@
 
 # <img src="images/spotify_img.png" alt="drawing" width="25"/> Spotify Genius Music Player <img src="images/genius_lyrics_image.png" alt="drawing" width="25"/> 
 Spotify track app that utilizes Spotify and Genius Lyrics API to render our application in a website browser.
+<hr>
 
+# Milestone 1
+
+## My App
+- "https://morning-ridge-34994.herokuapp.com/"
 ## Instructions
-
 To run this app on your local machine, clone this repository using the command:
 <br/>
 ```git clone https://github.com/csc4350-f21/project1-avenaktesh1.git```
@@ -58,5 +62,37 @@ Knowledge problems that still persist are:
 - Fixing the correct genius URL to display the exact song that is currently being played.
 - Creating a shuffle option and search bar to let users be able to pick specific or random songs to make interactive instead of redeploying the app to get a different song each time.
 
-## My App
-- "https://morning-ridge-34994.herokuapp.com/"
+<hr>
+
+# Milestone 2 
+
+This benchmark builds off from **Milestone 1** and will be covering how to create a login authentication page in order for specific users to save their favorite songs into their dashboard form
+
+## Instructions
+In your terminal run ```git clone -b milestone2 https://github.com/csc4350-f21/project1-avenaktesh1.git``` to gain access to the documents in the repository.
+### Installations
+Additional installations include from Milestone 1 include **SQL Alchemy** and **Flask SQL Alchemy** ORM (***Object Relational Mapping***) for making queries with the database and creating database models. **Flask-Login** which is different from Flask micro-framework since it include internal commands that help authenticate a login manager and allow users to view their dashboard portal.
+
+### Heroku Setup and Deployment
+- In order to setup your database, you must run these commands ```heroku create``` to create new heroku app.
+- Then, ```heroku addons:create heroku-postgresql:hobby-dev``` to create a new remote Database.
+- Copy and paste your heroku database URL into your environment variables folder.
+
+
+## Knowledge Problems
+- I felt the biggest learning curve in this project was how to setup the database tables and make them interact with each other. It would've been helpful or saved some time if we had done some relationship modeling in class. 
+- I understood how to create generic models and insert, update, and delete. My current setup for the database model is ***One to Many***. There were many ways I was thinking to approach this problem:
+    - Using an username, artist, and interface table (3 tables total)
+    - Using username table and artist table (which would store the foreign key of username ID) * **CURENT MODEL** *
+- Understanding the steps in order to achieve the milestone objectives were little bit confusing. I wanted to make sure that I met all the requirements for the most part. The ***Flask_Login*** authentication was little confusing because I didn't know if we would have to make sure the login is somewhat secure or save a session/cookies. This led to me overthinking the problem a bit.
+
+## Technical Issues
+- Flask login manager was little confusing especially since the documentation didn't make much sense as to how to log in a user. This is what I struggled with for the most.
+- Heroku Deployment was little bit confusing as whenever I run the logs its hard to spot exactly what the errors were. I was able to get the app to deploy but getting the database to not only work locally, but also remotely, was a struggle since the login authentication wouldn't work much.
+- **HUGE** issues with PostgreSQL database modeling! Deleting, creating, reading tables were all a tedious task. I tried **DROP** tables to get rid of my schema and start a new one and sometimes it would run, other times not. Creating tables were not bad, but sometimes it would not create the table names as the way I specified it to be (naming would be inconsistent between upper and lower casing).
+
+
+## Improvements
+- It would be nice to go over some more database setup and relational modeling since storage is a key aspect to working with data and crucial web applications. It can get complex, so maybe doing more in class activities and homeworks that build up to whatever big projects we are forced to implement on our own would be beneficial.
+
+

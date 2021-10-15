@@ -103,7 +103,8 @@ def index():
         response_object = Artist_ID(artist_name = result, username_id=current_user.id)
         db.session.add(response_object)
         db.session.commit()
- 
+    
+
     artist_object = Artist_ID.query.filter_by(username_id = current_user.id).all()
     artists_lst = []
     for artist in artist_object:
